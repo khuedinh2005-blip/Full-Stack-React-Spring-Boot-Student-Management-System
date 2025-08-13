@@ -11,7 +11,8 @@ const ListStudentComponent = () => {
     setSearchTerm,
     isSearching,
     searchStudentById,
-    clearSearch
+    clearSearch,
+    generateMissingStudentIds
   } = useListStudentComponentHook();
 
   return (
@@ -20,10 +21,23 @@ const ListStudentComponent = () => {
       
       {/* Search Section */}
       <div className="row mb-4">
-        <div className="col-md-6">
+        <div className="col-md-4">
           <ButtonLink text="Add Student" toAction="/add-student" />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
+          <button 
+            className="btn btn-warning"
+            onClick={() => {
+              // This will be implemented in the hook
+              if (window.confirm('Generate Student IDs for records that don\'t have them?')) {
+                generateMissingStudentIds();
+              }
+            }}
+          >
+            Generate Missing IDs
+          </button>
+        </div>
+        <div className="col-md-4">
           <div className="d-flex gap-2">
             <input
               type="text"
@@ -76,7 +90,13 @@ const ListStudentComponent = () => {
           {students.map((item) => {
             return (
               <tr key={item.id}>
-                <td>{item.studentId}</td>
+                <td>
+                  {item.studentId ? (
+                    <span className="badge bg-primary">{item.studentId}</span>
+                  ) : (
+                    <span className="text-muted">Not Assigned</span>
+                  )}
+                </td>
                 <td>{item.firstName}</td>
                 <td>{item.lastName}</td>
                 <td>{item.email}</td>

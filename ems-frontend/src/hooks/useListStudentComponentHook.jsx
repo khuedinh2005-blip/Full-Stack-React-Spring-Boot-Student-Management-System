@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { listStudents, deleteStudent, getStudentByStudentId } from "../services/StudentService";
+import { listStudents, deleteStudent, getStudentByStudentId, generateStudentIds } from "../services/StudentService";
 import { listDepartments } from "../services/DepartmentService";
 
 const useListStudentComponentHook = () => {
@@ -74,6 +74,17 @@ const useListStudentComponentHook = () => {
     fetchStudents();
   };
 
+  const generateMissingStudentIds = async () => {
+    try {
+      await generateStudentIds();
+      toast.success("Student IDs generated successfully!");
+      fetchStudents(); // Refresh the list to show new IDs
+    } catch (error) {
+      toast.error("Failed to generate student IDs");
+      console.error("Error generating student IDs:", error);
+    }
+  };
+
   return {
     students,
     departments,
@@ -87,6 +98,7 @@ const useListStudentComponentHook = () => {
     deleteStudentById,
     searchStudentById,
     clearSearch,
+    generateMissingStudentIds,
   };
 };
 

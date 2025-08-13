@@ -49,4 +49,10 @@ public class StudentController {
         studentService.deleteStudent(studentId);
         return new ResponseEntity<>("Student was successfully deleted", HttpStatus.OK);
     }
+
+    @PostMapping("/generate-student-ids")
+    public ResponseEntity<String> generateStudentIds() {
+        studentService.generateStudentIdsForExistingRecords();
+        return new ResponseEntity<>("Student IDs generated successfully for existing records", HttpStatus.OK);
+    }
 }

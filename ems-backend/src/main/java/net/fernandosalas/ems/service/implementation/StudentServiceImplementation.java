@@ -81,4 +81,17 @@ public class StudentServiceImplementation implements StudentService {
                 new ResourceNotFoundException("Student was not found with given id: " + studentId));
         studentRepository.deleteById(studentId);
     }
+
+    @Override
+    public void generateStudentIdsForExistingRecords() {
+        List<Student> studentsWithoutIds = studentRepository.findAll().stream()
+                .filter(student -> student.getStudentId() == null || student.getStudentId().isEmpty())
+                .collect(Collectors.toList());
+        
+        for (Student student : studentsWithoutIds) {
+            String generatedId = "STU" + String.format("%06d", student.getId());
+            student.setStudentId(generatedId);
+            studentRepository.save(student);
+        }
+    }
 }

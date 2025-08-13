@@ -22,6 +22,10 @@ export const getStudentByStudentId = (studentId) => {
   return axios.get(`${REST_API_URL}/search/${studentId}`);
 };
 
+export const generateStudentIds = () => {
+  return axios.post(`${REST_API_URL}/generate-student-ids`);
+};
+
 export const updateStudent = (id, student) => {
   return axios.put(`${REST_API_URL}/${id}`, student);
 };
