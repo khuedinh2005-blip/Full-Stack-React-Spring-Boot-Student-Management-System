@@ -65,12 +65,11 @@ const ListStudentComponent = () => {
         <thead>
           <tr>
             <th scope="col">Student ID</th>
-            <th scope="col">Employee First Name</th>
-            <th scope="col">Employee Last Name</th>
-            <th scope="col">Employee Email</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
             <th scope="col">Department</th>
-            <th scope="col">Action #1</th>
-            <th scope="col">Action #2</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -84,18 +83,16 @@ const ListStudentComponent = () => {
                 <td>{getDepartmentName(item.departmentId)}</td>
                 <td>
                   <button
+                    className="btn btn-outline-info me-2"
+                    onClick={() => updateStudent(item.id)}
+                  >
+                    Update
+                  </button>
+                  <button
                     className="btn btn-outline-danger"
                     onClick={() => deleteStudentById(item.id)}
                   >
                     Delete
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-outline-info"
-                    onClick={() => updateStudent(item.id)}
-                  >
-                    Update
                   </button>
                 </td>
               </tr>
