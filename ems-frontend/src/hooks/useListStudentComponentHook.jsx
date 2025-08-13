@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { listStudents, deleteStudent } from "../services/StudentService";
+import { listStudents, deleteStudent, getStudentByStudentId } from "../services/StudentService";
 import { listDepartments } from "../services/DepartmentService";
 
 const useListStudentComponentHook = () => {
   const [students, setStudents] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
 
   const fetchStudents = async () => {
@@ -40,17 +42,51 @@ const useListStudentComponentHook = () => {
   const deleteStudentById = async (id) => {
     await deleteStudent(id);
     toast.error("Student deleted successfully!");
+    if (isSearching) {
+      // If we're currently viewing search results, refresh the search
+      searchStudentById();
+    } else {
+      fetchStudents();
+    }
+  };
+
+  const searchStudentById = async () => {
+    if (!searchTerm.trim()) {
+      toast.warning("Please enter a student ID to search");
+      return;
+    }
+
+    try {
+      const response = await getStudentByStudentId(searchTerm.trim());
+      setStudents([response.data]);
+      setIsSearching(true);
+      toast.success("Student found!");
+    } catch (error) {
+      toast.error("Student not found with the given ID");
+      setStudents([]);
+      setIsSearching(true);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setIsSearching(false);
     fetchStudents();
   };
 
   return {
     students,
     departments,
+    searchTerm,
+    setSearchTerm,
+    isSearching,
     fetchStudents,
     fetchDepartments,
     getDepartmentName,
     updateStudent,
     deleteStudentById,
+    searchStudentById,
+    clearSearch,
   };
 };
 

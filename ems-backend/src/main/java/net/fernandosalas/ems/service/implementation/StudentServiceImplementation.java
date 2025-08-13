@@ -42,6 +42,13 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
+    public StudentDto getStudentByStudentId(String studentId) {
+        Student student = studentRepository.findByStudentId(studentId).orElseThrow(()->
+                new ResourceNotFoundException("Student was not found with student ID: " + studentId));
+        return StudentMapper.mapToStudentDto(student);
+    }
+
+    @Override
     public List<StudentDto> getAllStudents() {
        List<Student> studentList =  studentRepository.findAll();
         return studentList.stream()
@@ -54,6 +61,7 @@ public class StudentServiceImplementation implements StudentService {
         Student student = studentRepository.findById(studentId).orElseThrow(()->
                 new ResourceNotFoundException("Student was not found with given id: " + studentId));
 
+        student.setStudentId(studentDto.getStudentId());
         student.setFirstName(studentDto.getFirstName());
         student.setLastName(studentDto.getLastName());
         student.setEmail(studentDto.getEmail());

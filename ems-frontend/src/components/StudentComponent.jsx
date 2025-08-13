@@ -3,6 +3,8 @@ import useStudentComponentHook from "../hooks/useStudentComponentHook";
 
 const StudentComponent = () => {
   const {
+    studentId,
+    setStudentId,
     firstName,
     setFirstName,
     lastName,
@@ -24,6 +26,17 @@ const StudentComponent = () => {
           <h2 className="text-center">{title}</h2>
           <div className="card-body">
             <form>
+              <div className="form-group mb-2">
+                <label className="form-label">Student ID: </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Student ID"
+                  name="studentId"
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
+                />
+              </div>
               <div className="form-group mb-2">
                 <label className="form-label">First Name: </label>
                 <input

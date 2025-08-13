@@ -6,6 +6,7 @@ public class StudentMapper {
     public static StudentDto mapToStudentDto(Student student) {
         return new StudentDto(
           student.getId(),
+          student.getStudentId(),
           student.getFirstName(),
           student.getLastName(),
           student.getEmail(),
@@ -22,6 +23,7 @@ public class StudentMapper {
 //        );
         Student student = new Student();
         student.setId(studentDto.getId());
+        student.setStudentId(studentDto.getStudentId());
         student.setFirstName(studentDto.getFirstName());
         student.setLastName(studentDto.getLastName());
         student.setEmail(studentDto.getEmail());

@@ -25,6 +25,13 @@ public class StudentController {
        StudentDto studentDto = studentService.getStudentById(studentId);
        return new ResponseEntity<>(studentDto, HttpStatus.OK);
     }
+
+    @GetMapping("/search/{studentId}")
+    public ResponseEntity<StudentDto> getStudentByStudentId(@PathVariable("studentId") String studentId) {
+        StudentDto studentDto = studentService.getStudentByStudentId(studentId);
+        return new ResponseEntity<>(studentDto, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<StudentDto>> getAllStudents() {
        List<StudentDto> studentDtoList =  studentService.getAllStudents();

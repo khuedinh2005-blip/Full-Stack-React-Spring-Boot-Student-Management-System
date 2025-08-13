@@ -9,6 +9,7 @@ import {
 } from "../services/StudentService";
 
 const useStudentComponentHook = () => {
+  const [studentId, setStudentId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,9 +31,9 @@ const useStudentComponentHook = () => {
   const saveOrUpdateStudent = async (e) => {
     e.preventDefault();
 
-    const student = { firstName, lastName, email, departmentId };
+    const student = { studentId, firstName, lastName, email, departmentId };
 
-    if (firstName && lastName && email) {
+    if (studentId && firstName && lastName && email) {
       try {
         if (id) {
           await updateStudent(id, student);
@@ -55,6 +56,7 @@ const useStudentComponentHook = () => {
   const getStudentData = async (studentId) => {
     const response = await getStudentById(studentId);
     const student = response.data;
+    setStudentId(student.studentId);
     setFirstName(student.firstName);
     setLastName(student.lastName);
     setEmail(student.email);
@@ -71,6 +73,8 @@ const useStudentComponentHook = () => {
   }, [id]);
 
   return {
+    studentId,
+    setStudentId,
     firstName,
     setFirstName,
     lastName,
