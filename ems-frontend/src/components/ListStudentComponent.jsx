@@ -25,10 +25,14 @@ const ListStudentComponent = () => {
           <ButtonLink text="Add Student" toAction="/add-student" />
         </div>
         <div className="col-md-4">
+          {students.filter(s => !s.studentId).length > 0 && (
+            <div className="alert alert-warning py-2 mb-2">
+              <strong>{students.filter(s => !s.studentId).length}</strong> students missing Student ID
+            </div>
+          )}
           <button 
             className="btn btn-warning"
             onClick={() => {
-              // This will be implemented in the hook
               if (window.confirm('Generate Student IDs for records that don\'t have them?')) {
                 generateMissingStudentIds();
               }
@@ -91,11 +95,11 @@ const ListStudentComponent = () => {
             return (
               <tr key={item.id}>
                 <td>
-                  {item.studentId ? (
-                    <span className="badge bg-primary">{item.studentId}</span>
-                  ) : (
-                    <span className="text-muted">Not Assigned</span>
-                  )}
+                  {item.studentId || 'Not Assigned'}
+                  {/* Debug info */}
+                  <small style={{display: 'block', color: 'gray'}}>
+                    Debug: {JSON.stringify({id: item.id, studentId: item.studentId})}
+                  </small>
                 </td>
                 <td>{item.firstName}</td>
                 <td>{item.lastName}</td>

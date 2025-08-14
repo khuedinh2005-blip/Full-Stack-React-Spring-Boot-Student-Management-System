@@ -32,6 +32,7 @@ const useStudentComponentHook = () => {
     e.preventDefault();
 
     const student = { studentId, firstName, lastName, email, departmentId };
+    console.log("Saving student with data:", student);
 
     if (studentId && firstName && lastName && email) {
       try {

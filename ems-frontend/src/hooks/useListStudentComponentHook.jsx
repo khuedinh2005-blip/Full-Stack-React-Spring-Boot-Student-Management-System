@@ -14,6 +14,7 @@ const useListStudentComponentHook = () => {
   const fetchStudents = async () => {
     try {
       const response = await listStudents();
+      console.log("Fetched students data:", response.data);
       setStudents(response.data);
     } catch (err) {
       console.log(err);
